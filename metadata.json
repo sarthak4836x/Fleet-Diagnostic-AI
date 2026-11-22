@@ -1,0 +1,7 @@
+{
+  "name": "FleetDiag AI - Commercial Vehicle Diagnostics",
+  "description": "Real-time streaming telemetry, Google Maps live fleet tracking feed, and DTC diagnostic AI for commercial heavy-duty trucks.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

@@ -1,0 +1,8 @@
+*.pdf binary
+*.png binary
+
+# Development-only files: never copied to the public repository (see docs/RELEASING.md)
+.github/workflows/publish-public.yml export-ignore
+scripts/publish-public.sh export-ignore
+docs/RELEASING.md export-ignore
+docs/superpowers export-ignore

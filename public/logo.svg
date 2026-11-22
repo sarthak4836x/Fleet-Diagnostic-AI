@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <linearGradient id="shieldBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="45%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+
+    <linearGradient id="truckGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0369a1" />
+    </linearGradient>
+
+    <linearGradient id="amberPulse" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Hexagonal Shield Outer Contour - Perfectly Centered at x=60 -->
+  <polygon points="60,10 104,28 104,76 60,110 16,76 16,28" fill="url(#bgGrad)" stroke="url(#shieldBorder)" stroke-width="3.2" stroke-linejoin="round" />
+
+  <!-- Inset Precision Boundary Line -->
+  <polygon points="60,18 96,33 96,72 60,102 24,72 24,33" fill="none" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.3" stroke-dasharray="2 2" />
+
+  <!-- Aerodynamic Roof Fairing & Air Deflector -->
+  <polygon points="46,31 74,31 82,41 38,41" fill="url(#truckGrad)" opacity="0.95" />
+
+  <!-- Dual Windshield with Center Divider -->
+  <polygon points="41,44 79,44 82,55 38,55" fill="#082f49" stroke="#38bdf8" stroke-width="1.2" stroke-linejoin="round" />
+  <line x1="60" y1="44" x2="60" y2="55" stroke="#38bdf8" stroke-width="1.2" />
+
+  <!-- Heavy-Duty Radiator Grille & Cab Body -->
+  <rect x="36" y="57" width="48" height="18" rx="2" fill="#0c4a6e" stroke="#0284c7" stroke-width="1.2" />
+
+  <!-- Precision Grille Slats -->
+  <line x1="42" y1="61" x2="78" y2="61" stroke="#e0f2fe" stroke-width="1.4" stroke-linecap="round" opacity="0.9" />
+  <line x1="44" y1="65" x2="76" y2="65" stroke="#bae6fd" stroke-width="1.4" stroke-linecap="round" opacity="0.8" />
+  <line x1="46" y1="69" x2="74" y2="69" stroke="#7dd3fc" stroke-width="1.4" stroke-linecap="round" opacity="0.7" />
+
+  <!-- LED Headlights (Left & Right) -->
+  <rect x="37" y="60" width="3" height="9" rx="1" fill="#fde047" />
+  <rect x="80" y="60" width="3" height="9" rx="1" fill="#fde047" />
+
+  <!-- Heavy Commercial Wheels -->
+  <circle cx="37" cy="76" r="6" fill="#020617" stroke="#38bdf8" stroke-width="2" />
+  <circle cx="37" cy="76" r="2" fill="#f59e0b" />
+
+  <circle cx="83" cy="76" r="6" fill="#020617" stroke="#38bdf8" strokeWidth="2" />
+  <circle cx="83" cy="76" r="2" fill="#f59e0b" />
+
+  <!-- Real-time CAN-Bus Telemetry Pulse Wave - Fully contained within shield -->
+  <path d="M26,87 L40,87 L46,80 L52,94 L58,81 L64,91 L70,87 L94,87" fill="none" stroke="url(#amberPulse)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" />
+
+  <!-- Diagnostic Spark Node -->
+  <circle cx="58" cy="81" r="2.2" fill="#fbbf24" filter="url(#glow)" />
+  <circle cx="86" cy="27" r="2" fill="#38bdf8" filter="url(#glow)" />
+  <circle cx="76" cy="21" r="1.5" fill="#22d3ee" />
+  <line x1="76" y1="21" x2="86" y2="27" stroke="#38bdf8" stroke-width="1" stroke-dasharray="1.5 1.5" opacity="0.7" />
+</svg>

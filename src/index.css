@@ -1,0 +1,1075 @@
+@import "tailwindcss";
+
+/*
+ * FleetDiag design system — Apple-inspired
+ * ----------------------------------------
+ * The components were written with Tailwind's slate / cyan / amber / emerald / rose
+ * palette. Instead of rewriting thousands of class names, we remap those palette
+ * tokens to Apple's system colours (dark by default, light under .theme-daytime).
+ *   slate   -> system grays (backgrounds, separators, labels)
+ *   cyan    -> system blue  (primary accent / links)
+ *   amber   -> system orange (warnings)
+ *   emerald -> system green (healthy)
+ *   rose    -> system red   (critical)
+ */
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  /* Numbers & labels used font-mono everywhere; render them in the system font with tabular digits. */
+  --font-mono: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, sans-serif;
+
+  --radius-xl: 0.625rem;
+  --radius-2xl: 0.875rem;
+  --radius-3xl: 1.25rem;
+
+  /* Dark appearance (default) */
+  --color-slate-50: #ffffff;
+  --color-slate-100: #f5f5f7;
+  --color-slate-200: #e5e5ea;
+  --color-slate-300: #c7c7cc;
+  --color-slate-400: #98989d;
+  --color-slate-500: #8e8e93;
+  --color-slate-600: #636366;
+  --color-slate-700: #3a3a3c;
+  --color-slate-800: #2c2c2e;
+  --color-slate-900: #1c1c1e;
+  --color-slate-950: #000000;
+
+  --color-cyan-200: #a8d4ff;
+  --color-cyan-300: #64b5ff;
+  --color-cyan-400: #0a84ff;
+  --color-cyan-500: #0a84ff;
+  --color-cyan-600: #0071e3;
+
+  --color-sky-300: #64b5ff;
+  --color-sky-400: #0a84ff;
+  --color-sky-500: #0a84ff;
+
+  --color-amber-200: #ffd60a;
+  --color-amber-300: #ffb340;
+  --color-amber-400: #ff9f0a;
+  --color-amber-500: #ff9f0a;
+  --color-amber-600: #c96f00;
+
+  --color-emerald-300: #66d47e;
+  --color-emerald-400: #30d158;
+  --color-emerald-500: #30d158;
+  --color-emerald-600: #248a3d;
+
+  --color-rose-300: #ff6961;
+  --color-rose-400: #ff453a;
+  --color-rose-500: #ff453a;
+  --color-rose-600: #d70015;
+
+  --color-indigo-400: #7d7aff;
+  --color-indigo-500: #5e5ce6;
+}
+
+/* Light appearance */
+html.theme-daytime {
+  --color-slate-50: #000000;
+  --color-slate-100: #1d1d1f;
+  --color-slate-200: #1d1d1f;
+  --color-slate-300: #3a3a3c;
+  --color-slate-400: #6e6e73;
+  --color-slate-500: #86868b;
+  --color-slate-600: #aeaeb2;
+  --color-slate-700: #d2d2d7;
+  --color-slate-800: #e5e5ea;
+  --color-slate-900: #ffffff;
+  --color-slate-950: #f5f5f7;
+
+  --color-cyan-200: #0055b3;
+  --color-cyan-300: #0066cc;
+  --color-cyan-400: #0071e3;
+  --color-cyan-500: #0071e3;
+  --color-cyan-600: #0058b0;
+
+  --color-sky-300: #0066cc;
+  --color-sky-400: #0071e3;
+  --color-sky-500: #0071e3;
+
+  --color-amber-200: #a05a00;
+  --color-amber-300: #b25000;
+  --color-amber-400: #c25e00;
+  --color-amber-500: #ff9500;
+  --color-amber-600: #a05a00;
+
+  --color-emerald-300: #1f7a35;
+  --color-emerald-400: #248a3d;
+  --color-emerald-500: #34c759;
+  --color-emerald-600: #1f7a35;
+
+  --color-rose-300: #b5000f;
+  --color-rose-400: #d70015;
+  --color-rose-500: #ff3b30;
+  --color-rose-600: #b5000f;
+
+  --color-indigo-400: #5856d6;
+  --color-indigo-500: #5856d6;
+}
+
+@layer base {
+  html {
+    overflow-x: clip;
+    max-width: 100vw;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    overflow-x: clip;
+    max-width: 100vw;
+    width: 100%;
+    min-height: 100vh;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.011em;
+    line-height: 1.5;
+    background-color: var(--color-slate-950);
+    color: var(--color-slate-100);
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  /* Real code (JSON payloads, terminals) keeps a monospace face */
+  pre,
+  code,
+  kbd,
+  samp,
+  pre *,
+  code *,
+  .font-mono-code,
+  textarea.font-mono {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0;
+  }
+
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.005em;
+  }
+
+  .font-display {
+    font-family: var(--font-sans);
+    letter-spacing: -0.022em;
+    font-weight: 600;
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.02em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-cyan-400);
+    outline-offset: 2px;
+  }
+
+  select option {
+    background-color: var(--color-slate-900);
+    color: var(--color-slate-100);
+  }
+}
+
+/* ---------- Calm the visual noise ---------- */
+
+/* Heavy uppercase tracking reads as "busy"; keep it subtle */
+.tracking-wider,
+.tracking-widest,
+.tracking-wide {
+  letter-spacing: 0.02em;
+}
+
+/* Minimum legible size for micro labels (especially on phones) */
+.text-\[8px\],
+.text-\[9px\],
+.text-\[10px\] {
+  font-size: 11px !important;
+}
+
+/* Remove neon glows */
+[class*="shadow-[0_0_"],
+[class*="drop-shadow-[0_"] {
+  box-shadow: none !important;
+  filter: none !important;
+}
+[class*="shadow-amber-"],
+[class*="shadow-cyan-"],
+[class*="shadow-emerald-"],
+[class*="shadow-rose-"] {
+  --tw-shadow-color: rgb(0 0 0 / 0.12) !important;
+}
+
+/* Expanding "radar" pings are distracting — keep the dot, drop the animation */
+.animate-ping {
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Apple-style primitives ---------- */
+@layer components {
+  .apple-card {
+    background-color: var(--color-slate-900);
+    border-radius: 1.25rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.06);
+  }
+
+  .apple-toolbar {
+    background-color: color-mix(in srgb, var(--color-slate-950) 72%, transparent);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-slate-700) 55%, transparent);
+  }
+
+  .apple-input {
+    width: 100%;
+    height: 2.75rem;
+    padding: 0 0.875rem;
+    border-radius: 0.75rem;
+    background-color: var(--color-slate-950);
+    border: 1px solid var(--color-slate-700);
+    color: var(--color-slate-100);
+    font-size: 16px; /* 16px prevents iOS zoom-on-focus */
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .apple-input::placeholder {
+    color: var(--color-slate-500);
+  }
+  .apple-input:focus {
+    outline: none;
+    border-color: var(--color-cyan-400);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-cyan-400) 25%, transparent);
+  }
+
+  .apple-button-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 2.25rem;
+    padding: 0 1.1rem;
+    border-radius: 9999px;
+    background-color: var(--color-cyan-500);
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: 15px;
+    transition: filter 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
+    cursor: pointer;
+  }
+  .apple-button-primary:hover {
+    filter: brightness(1.08);
+  }
+  .apple-button-primary:active {
+    transform: scale(0.98);
+  }
+  .apple-button-primary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  form .apple-button-primary {
+    min-height: 2.75rem;
+  }
+
+  .apple-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 9999px;
+    color: var(--color-slate-300);
+    transition: background-color 0.15s ease, color 0.15s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .apple-icon-button:hover {
+    background-color: color-mix(in srgb, var(--color-slate-700) 60%, transparent);
+    color: var(--color-slate-100);
+  }
+
+  /* Segmented control (desktop tabs) */
+  .apple-segmented {
+    display: flex;
+    width: 100%;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 9999px;
+    background-color: color-mix(in srgb, var(--color-slate-700) 55%, transparent);
+  }
+  .apple-segmented > button {
+    display: inline-flex;
+    flex: 1 1 0;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.95rem;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-slate-300);
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+  .apple-segmented > button:hover {
+    color: var(--color-slate-100);
+  }
+  .apple-segmented > button[aria-selected="true"] {
+    background-color: var(--color-slate-900);
+    color: var(--color-slate-100);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.12), 0 1px 1px rgb(0 0 0 / 0.04);
+  }
+  html:not(.theme-daytime) .apple-segmented > button[aria-selected="true"] {
+    background-color: var(--color-slate-600);
+  }
+
+  /* Bottom tab bar (phones) */
+  .apple-tabbar {
+    background-color: color-mix(in srgb, var(--color-slate-900) 80%, transparent);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-top: 1px solid color-mix(in srgb, var(--color-slate-700) 55%, transparent);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .apple-tabbar button {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 0 4px;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--color-slate-500);
+    cursor: pointer;
+  }
+  .apple-tabbar button[aria-selected="true"] {
+    color: var(--color-cyan-400);
+  }
+}
+
+/* Soften the dark-theme borders on cards so surfaces read as layers, not boxes */
+html:not(.theme-daytime) .border-slate-800,
+html:not(.theme-daytime) .border-slate-800\/80,
+html:not(.theme-daytime) .border-slate-800\/60 {
+  border-color: rgb(255 255 255 / 0.07);
+}
+html.theme-daytime .border-slate-800,
+html.theme-daytime .border-slate-800\/80 {
+  border-color: rgb(0 0 0 / 0.08);
+}
+
+/* In light mode "text-white" (used for headings) must become dark */
+html.theme-daytime .text-white:not(.apple-keep-white) {
+  color: var(--color-slate-100);
+}
+html.theme-daytime .hover\:text-white:hover {
+  color: #000000;
+}
+
+/* Modal and overlay scroll locking */
+body.scroll-locked {
+  overflow: hidden !important;
+}
+
+/* Thin, unobtrusive scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-slate-500) 45%, transparent);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--color-slate-500) 70%, transparent);
+  background-clip: padding-box;
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}
+
+@layer utilities {
+  .hide-scrollbar,
+  .no-scrollbar,
+  .scrollbar-none,
+  .custom-scrollbar-none {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+  .hide-scrollbar::-webkit-scrollbar,
+  .no-scrollbar::-webkit-scrollbar,
+  .scrollbar-none::-webkit-scrollbar,
+  .custom-scrollbar-none::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  /* Utility alias for backwards-compatibility with pill badges */
+  .rounded-xl-full {
+    border-radius: 9999px !important;
+  }
+
+  .custom-scrollbar-thin::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+}
+
+/* ==========================================================================
+   Calm colour system
+   Apple's rule: colour communicates status or interactivity — never decoration.
+   The components use Tailwind accent colours liberally; these rules mute them
+   globally so the app reads as neutral greys with a single blue accent, and
+   colour is reserved for key readings (orange = warning, green = good,
+   red = critical). Generated by a script; edit the rules, not each selector.
+   ========================================================================== */
+:root {
+  --calm-fill: color-mix(in srgb, var(--color-slate-500) 14%, transparent);
+  --calm-fill-strong: color-mix(in srgb, var(--color-slate-500) 22%, transparent);
+  --calm-label: var(--color-slate-300);
+  --calm-hairline: color-mix(in srgb, var(--color-slate-500) 22%, transparent);
+}
+
+/* 1. Tinted chips, tiles and banners -> neutral fill */
+[class^="bg-amber-50/"], [class*=" bg-amber-50/"],
+[class^="bg-amber-100/"], [class*=" bg-amber-100/"],
+[class^="bg-amber-200/"], [class*=" bg-amber-200/"],
+[class^="bg-amber-300/"], [class*=" bg-amber-300/"],
+[class^="bg-amber-400/"], [class*=" bg-amber-400/"],
+[class^="bg-amber-500/"], [class*=" bg-amber-500/"],
+[class^="bg-amber-600/"], [class*=" bg-amber-600/"],
+[class^="bg-amber-700/"], [class*=" bg-amber-700/"],
+[class^="bg-amber-800/"], [class*=" bg-amber-800/"],
+[class^="bg-amber-900/"], [class*=" bg-amber-900/"],
+[class^="bg-amber-950/"], [class*=" bg-amber-950/"],
+[class^="bg-orange-50/"], [class*=" bg-orange-50/"],
+[class^="bg-orange-100/"], [class*=" bg-orange-100/"],
+[class^="bg-orange-200/"], [class*=" bg-orange-200/"],
+[class^="bg-orange-300/"], [class*=" bg-orange-300/"],
+[class^="bg-orange-400/"], [class*=" bg-orange-400/"],
+[class^="bg-orange-500/"], [class*=" bg-orange-500/"],
+[class^="bg-orange-600/"], [class*=" bg-orange-600/"],
+[class^="bg-orange-700/"], [class*=" bg-orange-700/"],
+[class^="bg-orange-800/"], [class*=" bg-orange-800/"],
+[class^="bg-orange-900/"], [class*=" bg-orange-900/"],
+[class^="bg-orange-950/"], [class*=" bg-orange-950/"],
+[class^="bg-yellow-50/"], [class*=" bg-yellow-50/"],
+[class^="bg-yellow-100/"], [class*=" bg-yellow-100/"],
+[class^="bg-yellow-200/"], [class*=" bg-yellow-200/"],
+[class^="bg-yellow-300/"], [class*=" bg-yellow-300/"],
+[class^="bg-yellow-400/"], [class*=" bg-yellow-400/"],
+[class^="bg-yellow-500/"], [class*=" bg-yellow-500/"],
+[class^="bg-yellow-600/"], [class*=" bg-yellow-600/"],
+[class^="bg-yellow-700/"], [class*=" bg-yellow-700/"],
+[class^="bg-yellow-800/"], [class*=" bg-yellow-800/"],
+[class^="bg-yellow-900/"], [class*=" bg-yellow-900/"],
+[class^="bg-yellow-950/"], [class*=" bg-yellow-950/"],
+[class^="bg-emerald-50/"], [class*=" bg-emerald-50/"],
+[class^="bg-emerald-100/"], [class*=" bg-emerald-100/"],
+[class^="bg-emerald-200/"], [class*=" bg-emerald-200/"],
+[class^="bg-emerald-300/"], [class*=" bg-emerald-300/"],
+[class^="bg-emerald-400/"], [class*=" bg-emerald-400/"],
+[class^="bg-emerald-500/"], [class*=" bg-emerald-500/"],
+[class^="bg-emerald-600/"], [class*=" bg-emerald-600/"],
+[class^="bg-emerald-700/"], [class*=" bg-emerald-700/"],
+[class^="bg-emerald-800/"], [class*=" bg-emerald-800/"],
+[class^="bg-emerald-900/"], [class*=" bg-emerald-900/"],
+[class^="bg-emerald-950/"], [class*=" bg-emerald-950/"],
+[class^="bg-green-50/"], [class*=" bg-green-50/"],
+[class^="bg-green-100/"], [class*=" bg-green-100/"],
+[class^="bg-green-200/"], [class*=" bg-green-200/"],
+[class^="bg-green-300/"], [class*=" bg-green-300/"],
+[class^="bg-green-400/"], [class*=" bg-green-400/"],
+[class^="bg-green-500/"], [class*=" bg-green-500/"],
+[class^="bg-green-600/"], [class*=" bg-green-600/"],
+[class^="bg-green-700/"], [class*=" bg-green-700/"],
+[class^="bg-green-800/"], [class*=" bg-green-800/"],
+[class^="bg-green-900/"], [class*=" bg-green-900/"],
+[class^="bg-green-950/"], [class*=" bg-green-950/"],
+[class^="bg-lime-50/"], [class*=" bg-lime-50/"],
+[class^="bg-lime-100/"], [class*=" bg-lime-100/"],
+[class^="bg-lime-200/"], [class*=" bg-lime-200/"],
+[class^="bg-lime-300/"], [class*=" bg-lime-300/"],
+[class^="bg-lime-400/"], [class*=" bg-lime-400/"],
+[class^="bg-lime-500/"], [class*=" bg-lime-500/"],
+[class^="bg-lime-600/"], [class*=" bg-lime-600/"],
+[class^="bg-lime-700/"], [class*=" bg-lime-700/"],
+[class^="bg-lime-800/"], [class*=" bg-lime-800/"],
+[class^="bg-lime-900/"], [class*=" bg-lime-900/"],
+[class^="bg-lime-950/"], [class*=" bg-lime-950/"],
+[class^="bg-cyan-50/"], [class*=" bg-cyan-50/"],
+[class^="bg-cyan-100/"], [class*=" bg-cyan-100/"],
+[class^="bg-cyan-200/"], [class*=" bg-cyan-200/"],
+[class^="bg-cyan-300/"], [class*=" bg-cyan-300/"],
+[class^="bg-cyan-400/"], [class*=" bg-cyan-400/"],
+[class^="bg-cyan-500/"], [class*=" bg-cyan-500/"],
+[class^="bg-cyan-600/"], [class*=" bg-cyan-600/"],
+[class^="bg-cyan-700/"], [class*=" bg-cyan-700/"],
+[class^="bg-cyan-800/"], [class*=" bg-cyan-800/"],
+[class^="bg-cyan-900/"], [class*=" bg-cyan-900/"],
+[class^="bg-cyan-950/"], [class*=" bg-cyan-950/"],
+[class^="bg-sky-50/"], [class*=" bg-sky-50/"],
+[class^="bg-sky-100/"], [class*=" bg-sky-100/"],
+[class^="bg-sky-200/"], [class*=" bg-sky-200/"],
+[class^="bg-sky-300/"], [class*=" bg-sky-300/"],
+[class^="bg-sky-400/"], [class*=" bg-sky-400/"],
+[class^="bg-sky-500/"], [class*=" bg-sky-500/"],
+[class^="bg-sky-600/"], [class*=" bg-sky-600/"],
+[class^="bg-sky-700/"], [class*=" bg-sky-700/"],
+[class^="bg-sky-800/"], [class*=" bg-sky-800/"],
+[class^="bg-sky-900/"], [class*=" bg-sky-900/"],
+[class^="bg-sky-950/"], [class*=" bg-sky-950/"],
+[class^="bg-blue-50/"], [class*=" bg-blue-50/"],
+[class^="bg-blue-100/"], [class*=" bg-blue-100/"],
+[class^="bg-blue-200/"], [class*=" bg-blue-200/"],
+[class^="bg-blue-300/"], [class*=" bg-blue-300/"],
+[class^="bg-blue-400/"], [class*=" bg-blue-400/"],
+[class^="bg-blue-500/"], [class*=" bg-blue-500/"],
+[class^="bg-blue-600/"], [class*=" bg-blue-600/"],
+[class^="bg-blue-700/"], [class*=" bg-blue-700/"],
+[class^="bg-blue-800/"], [class*=" bg-blue-800/"],
+[class^="bg-blue-900/"], [class*=" bg-blue-900/"],
+[class^="bg-blue-950/"], [class*=" bg-blue-950/"],
+[class^="bg-indigo-50/"], [class*=" bg-indigo-50/"],
+[class^="bg-indigo-100/"], [class*=" bg-indigo-100/"],
+[class^="bg-indigo-200/"], [class*=" bg-indigo-200/"],
+[class^="bg-indigo-300/"], [class*=" bg-indigo-300/"],
+[class^="bg-indigo-400/"], [class*=" bg-indigo-400/"],
+[class^="bg-indigo-500/"], [class*=" bg-indigo-500/"],
+[class^="bg-indigo-600/"], [class*=" bg-indigo-600/"],
+[class^="bg-indigo-700/"], [class*=" bg-indigo-700/"],
+[class^="bg-indigo-800/"], [class*=" bg-indigo-800/"],
+[class^="bg-indigo-900/"], [class*=" bg-indigo-900/"],
+[class^="bg-indigo-950/"], [class*=" bg-indigo-950/"],
+[class^="bg-violet-50/"], [class*=" bg-violet-50/"],
+[class^="bg-violet-100/"], [class*=" bg-violet-100/"],
+[class^="bg-violet-200/"], [class*=" bg-violet-200/"],
+[class^="bg-violet-300/"], [class*=" bg-violet-300/"],
+[class^="bg-violet-400/"], [class*=" bg-violet-400/"],
+[class^="bg-violet-500/"], [class*=" bg-violet-500/"],
+[class^="bg-violet-600/"], [class*=" bg-violet-600/"],
+[class^="bg-violet-700/"], [class*=" bg-violet-700/"],
+[class^="bg-violet-800/"], [class*=" bg-violet-800/"],
+[class^="bg-violet-900/"], [class*=" bg-violet-900/"],
+[class^="bg-violet-950/"], [class*=" bg-violet-950/"],
+[class^="bg-purple-50/"], [class*=" bg-purple-50/"],
+[class^="bg-purple-100/"], [class*=" bg-purple-100/"],
+[class^="bg-purple-200/"], [class*=" bg-purple-200/"],
+[class^="bg-purple-300/"], [class*=" bg-purple-300/"],
+[class^="bg-purple-400/"], [class*=" bg-purple-400/"],
+[class^="bg-purple-500/"], [class*=" bg-purple-500/"],
+[class^="bg-purple-600/"], [class*=" bg-purple-600/"],
+[class^="bg-purple-700/"], [class*=" bg-purple-700/"],
+[class^="bg-purple-800/"], [class*=" bg-purple-800/"],
+[class^="bg-purple-900/"], [class*=" bg-purple-900/"],
+[class^="bg-purple-950/"], [class*=" bg-purple-950/"],
+[class^="bg-fuchsia-50/"], [class*=" bg-fuchsia-50/"],
+[class^="bg-fuchsia-100/"], [class*=" bg-fuchsia-100/"],
+[class^="bg-fuchsia-200/"], [class*=" bg-fuchsia-200/"],
+[class^="bg-fuchsia-300/"], [class*=" bg-fuchsia-300/"],
+[class^="bg-fuchsia-400/"], [class*=" bg-fuchsia-400/"],
+[class^="bg-fuchsia-500/"], [class*=" bg-fuchsia-500/"],
+[class^="bg-fuchsia-600/"], [class*=" bg-fuchsia-600/"],
+[class^="bg-fuchsia-700/"], [class*=" bg-fuchsia-700/"],
+[class^="bg-fuchsia-800/"], [class*=" bg-fuchsia-800/"],
+[class^="bg-fuchsia-900/"], [class*=" bg-fuchsia-900/"],
+[class^="bg-fuchsia-950/"], [class*=" bg-fuchsia-950/"],
+[class^="bg-pink-50/"], [class*=" bg-pink-50/"],
+[class^="bg-pink-100/"], [class*=" bg-pink-100/"],
+[class^="bg-pink-200/"], [class*=" bg-pink-200/"],
+[class^="bg-pink-300/"], [class*=" bg-pink-300/"],
+[class^="bg-pink-400/"], [class*=" bg-pink-400/"],
+[class^="bg-pink-500/"], [class*=" bg-pink-500/"],
+[class^="bg-pink-600/"], [class*=" bg-pink-600/"],
+[class^="bg-pink-700/"], [class*=" bg-pink-700/"],
+[class^="bg-pink-800/"], [class*=" bg-pink-800/"],
+[class^="bg-pink-900/"], [class*=" bg-pink-900/"],
+[class^="bg-pink-950/"], [class*=" bg-pink-950/"],
+[class^="bg-teal-50/"], [class*=" bg-teal-50/"],
+[class^="bg-teal-100/"], [class*=" bg-teal-100/"],
+[class^="bg-teal-200/"], [class*=" bg-teal-200/"],
+[class^="bg-teal-300/"], [class*=" bg-teal-300/"],
+[class^="bg-teal-400/"], [class*=" bg-teal-400/"],
+[class^="bg-teal-500/"], [class*=" bg-teal-500/"],
+[class^="bg-teal-600/"], [class*=" bg-teal-600/"],
+[class^="bg-teal-700/"], [class*=" bg-teal-700/"],
+[class^="bg-teal-800/"], [class*=" bg-teal-800/"],
+[class^="bg-teal-900/"], [class*=" bg-teal-900/"],
+[class^="bg-teal-950/"], [class*=" bg-teal-950/"],
+[class^="bg-rose-50/"], [class*=" bg-rose-50/"],
+[class^="bg-rose-100/"], [class*=" bg-rose-100/"],
+[class^="bg-rose-200/"], [class*=" bg-rose-200/"],
+[class^="bg-rose-300/"], [class*=" bg-rose-300/"],
+[class^="bg-rose-400/"], [class*=" bg-rose-400/"],
+[class^="bg-rose-500/"], [class*=" bg-rose-500/"],
+[class^="bg-rose-600/"], [class*=" bg-rose-600/"],
+[class^="bg-rose-700/"], [class*=" bg-rose-700/"],
+[class^="bg-rose-800/"], [class*=" bg-rose-800/"],
+[class^="bg-rose-900/"], [class*=" bg-rose-900/"],
+[class^="bg-rose-950/"], [class*=" bg-rose-950/"],
+[class^="bg-red-50/"], [class*=" bg-red-50/"],
+[class^="bg-red-100/"], [class*=" bg-red-100/"],
+[class^="bg-red-200/"], [class*=" bg-red-200/"],
+[class^="bg-red-300/"], [class*=" bg-red-300/"],
+[class^="bg-red-400/"], [class*=" bg-red-400/"],
+[class^="bg-red-500/"], [class*=" bg-red-500/"],
+[class^="bg-red-600/"], [class*=" bg-red-600/"],
+[class^="bg-red-700/"], [class*=" bg-red-700/"],
+[class^="bg-red-800/"], [class*=" bg-red-800/"],
+[class^="bg-red-900/"], [class*=" bg-red-900/"],
+[class^="bg-red-950/"], [class*=" bg-red-950/"] {
+  background-color: var(--calm-fill) !important;
+}
+
+/* Accent gradients -> plain surface */
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-amber-"], [class*=" from-amber-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-orange-"], [class*=" from-orange-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-yellow-"], [class*=" from-yellow-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-emerald-"], [class*=" from-emerald-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-green-"], [class*=" from-green-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-lime-"], [class*=" from-lime-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-cyan-"], [class*=" from-cyan-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-sky-"], [class*=" from-sky-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-blue-"], [class*=" from-blue-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-indigo-"], [class*=" from-indigo-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-violet-"], [class*=" from-violet-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-purple-"], [class*=" from-purple-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-fuchsia-"], [class*=" from-fuchsia-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-pink-"], [class*=" from-pink-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-teal-"], [class*=" from-teal-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-rose-"], [class*=" from-rose-"]),
+[class*="bg-gradient"]:not(.h-full):not(button):is([class^="from-red-"], [class*=" from-red-"]) {
+  background-image: none !important;
+  background-color: var(--calm-fill) !important;
+}
+
+/* Gradient buttons become the blue primary button */
+button[class*="bg-gradient"]:is([class^="from-amber-"], [class*=" from-amber-"]),
+button[class*="bg-gradient"]:is([class^="from-orange-"], [class*=" from-orange-"]),
+button[class*="bg-gradient"]:is([class^="from-yellow-"], [class*=" from-yellow-"]),
+button[class*="bg-gradient"]:is([class^="from-emerald-"], [class*=" from-emerald-"]),
+button[class*="bg-gradient"]:is([class^="from-green-"], [class*=" from-green-"]),
+button[class*="bg-gradient"]:is([class^="from-lime-"], [class*=" from-lime-"]),
+button[class*="bg-gradient"]:is([class^="from-cyan-"], [class*=" from-cyan-"]),
+button[class*="bg-gradient"]:is([class^="from-sky-"], [class*=" from-sky-"]),
+button[class*="bg-gradient"]:is([class^="from-blue-"], [class*=" from-blue-"]),
+button[class*="bg-gradient"]:is([class^="from-indigo-"], [class*=" from-indigo-"]),
+button[class*="bg-gradient"]:is([class^="from-violet-"], [class*=" from-violet-"]),
+button[class*="bg-gradient"]:is([class^="from-purple-"], [class*=" from-purple-"]),
+button[class*="bg-gradient"]:is([class^="from-fuchsia-"], [class*=" from-fuchsia-"]),
+button[class*="bg-gradient"]:is([class^="from-pink-"], [class*=" from-pink-"]),
+button[class*="bg-gradient"]:is([class^="from-teal-"], [class*=" from-teal-"]) {
+  background-image: none !important;
+  background-color: var(--color-cyan-500) !important;
+  color: #ffffff !important;
+}
+button[class*="bg-gradient"]:is([class^="from-amber-"], [class*=" from-amber-"]) *,
+button[class*="bg-gradient"]:is([class^="from-orange-"], [class*=" from-orange-"]) *,
+button[class*="bg-gradient"]:is([class^="from-yellow-"], [class*=" from-yellow-"]) *,
+button[class*="bg-gradient"]:is([class^="from-emerald-"], [class*=" from-emerald-"]) *,
+button[class*="bg-gradient"]:is([class^="from-green-"], [class*=" from-green-"]) *,
+button[class*="bg-gradient"]:is([class^="from-lime-"], [class*=" from-lime-"]) *,
+button[class*="bg-gradient"]:is([class^="from-cyan-"], [class*=" from-cyan-"]) *,
+button[class*="bg-gradient"]:is([class^="from-sky-"], [class*=" from-sky-"]) *,
+button[class*="bg-gradient"]:is([class^="from-blue-"], [class*=" from-blue-"]) *,
+button[class*="bg-gradient"]:is([class^="from-indigo-"], [class*=" from-indigo-"]) *,
+button[class*="bg-gradient"]:is([class^="from-violet-"], [class*=" from-violet-"]) *,
+button[class*="bg-gradient"]:is([class^="from-purple-"], [class*=" from-purple-"]) *,
+button[class*="bg-gradient"]:is([class^="from-fuchsia-"], [class*=" from-fuchsia-"]) *,
+button[class*="bg-gradient"]:is([class^="from-pink-"], [class*=" from-pink-"]) *,
+button[class*="bg-gradient"]:is([class^="from-teal-"], [class*=" from-teal-"]) * {
+  color: #ffffff !important;
+}
+
+/* 2. Every solid accent button becomes the one blue primary button style */
+button[class~="bg-amber-300"],
+button[class~="bg-amber-400"],
+button[class~="bg-amber-500"],
+button[class~="bg-amber-600"],
+button[class~="bg-orange-300"],
+button[class~="bg-orange-400"],
+button[class~="bg-orange-500"],
+button[class~="bg-orange-600"],
+button[class~="bg-yellow-300"],
+button[class~="bg-yellow-400"],
+button[class~="bg-yellow-500"],
+button[class~="bg-yellow-600"],
+button[class~="bg-emerald-300"],
+button[class~="bg-emerald-400"],
+button[class~="bg-emerald-500"],
+button[class~="bg-emerald-600"],
+button[class~="bg-green-300"],
+button[class~="bg-green-400"],
+button[class~="bg-green-500"],
+button[class~="bg-green-600"],
+button[class~="bg-lime-300"],
+button[class~="bg-lime-400"],
+button[class~="bg-lime-500"],
+button[class~="bg-lime-600"],
+button[class~="bg-cyan-300"],
+button[class~="bg-cyan-400"],
+button[class~="bg-cyan-500"],
+button[class~="bg-cyan-600"],
+button[class~="bg-sky-300"],
+button[class~="bg-sky-400"],
+button[class~="bg-sky-500"],
+button[class~="bg-sky-600"],
+button[class~="bg-blue-300"],
+button[class~="bg-blue-400"],
+button[class~="bg-blue-500"],
+button[class~="bg-blue-600"],
+button[class~="bg-indigo-300"],
+button[class~="bg-indigo-400"],
+button[class~="bg-indigo-500"],
+button[class~="bg-indigo-600"],
+button[class~="bg-violet-300"],
+button[class~="bg-violet-400"],
+button[class~="bg-violet-500"],
+button[class~="bg-violet-600"],
+button[class~="bg-purple-300"],
+button[class~="bg-purple-400"],
+button[class~="bg-purple-500"],
+button[class~="bg-purple-600"],
+button[class~="bg-fuchsia-300"],
+button[class~="bg-fuchsia-400"],
+button[class~="bg-fuchsia-500"],
+button[class~="bg-fuchsia-600"],
+button[class~="bg-pink-300"],
+button[class~="bg-pink-400"],
+button[class~="bg-pink-500"],
+button[class~="bg-pink-600"],
+button[class~="bg-teal-300"],
+button[class~="bg-teal-400"],
+button[class~="bg-teal-500"],
+button[class~="bg-teal-600"] {
+  background-color: var(--color-cyan-500) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+button[class~="bg-amber-300"] *,
+button[class~="bg-amber-400"] *,
+button[class~="bg-amber-500"] *,
+button[class~="bg-amber-600"] *,
+button[class~="bg-orange-300"] *,
+button[class~="bg-orange-400"] *,
+button[class~="bg-orange-500"] *,
+button[class~="bg-orange-600"] *,
+button[class~="bg-yellow-300"] *,
+button[class~="bg-yellow-400"] *,
+button[class~="bg-yellow-500"] *,
+button[class~="bg-yellow-600"] *,
+button[class~="bg-emerald-300"] *,
+button[class~="bg-emerald-400"] *,
+button[class~="bg-emerald-500"] *,
+button[class~="bg-emerald-600"] *,
+button[class~="bg-green-300"] *,
+button[class~="bg-green-400"] *,
+button[class~="bg-green-500"] *,
+button[class~="bg-green-600"] *,
+button[class~="bg-lime-300"] *,
+button[class~="bg-lime-400"] *,
+button[class~="bg-lime-500"] *,
+button[class~="bg-lime-600"] *,
+button[class~="bg-cyan-300"] *,
+button[class~="bg-cyan-400"] *,
+button[class~="bg-cyan-500"] *,
+button[class~="bg-cyan-600"] *,
+button[class~="bg-sky-300"] *,
+button[class~="bg-sky-400"] *,
+button[class~="bg-sky-500"] *,
+button[class~="bg-sky-600"] *,
+button[class~="bg-blue-300"] *,
+button[class~="bg-blue-400"] *,
+button[class~="bg-blue-500"] *,
+button[class~="bg-blue-600"] *,
+button[class~="bg-indigo-300"] *,
+button[class~="bg-indigo-400"] *,
+button[class~="bg-indigo-500"] *,
+button[class~="bg-indigo-600"] *,
+button[class~="bg-violet-300"] *,
+button[class~="bg-violet-400"] *,
+button[class~="bg-violet-500"] *,
+button[class~="bg-violet-600"] *,
+button[class~="bg-purple-300"] *,
+button[class~="bg-purple-400"] *,
+button[class~="bg-purple-500"] *,
+button[class~="bg-purple-600"] *,
+button[class~="bg-fuchsia-300"] *,
+button[class~="bg-fuchsia-400"] *,
+button[class~="bg-fuchsia-500"] *,
+button[class~="bg-fuchsia-600"] *,
+button[class~="bg-pink-300"] *,
+button[class~="bg-pink-400"] *,
+button[class~="bg-pink-500"] *,
+button[class~="bg-pink-600"] *,
+button[class~="bg-teal-300"] *,
+button[class~="bg-teal-400"] *,
+button[class~="bg-teal-500"] *,
+button[class~="bg-teal-600"] * {
+  color: #ffffff !important;
+}
+
+/* 3. Decorative accent text and icons -> neutral */
+:where([class^="text-cyan-"], [class*=" text-cyan-"],
+[class^="text-sky-"], [class*=" text-sky-"],
+[class^="text-blue-"], [class*=" text-blue-"],
+[class^="text-indigo-"], [class*=" text-indigo-"],
+[class^="text-violet-"], [class*=" text-violet-"],
+[class^="text-purple-"], [class*=" text-purple-"],
+[class^="text-fuchsia-"], [class*=" text-fuchsia-"],
+[class^="text-pink-"], [class*=" text-pink-"],
+[class^="text-teal-"], [class*=" text-teal-"]):not(.apple-button-primary):not(.apple-button-primary *) {
+  color: var(--calm-label) !important;
+}
+
+/* 4. Orange / green only on key readings (large text); labels and icons go neutral */
+[class^="text-amber-"]:not([class*="text-lg"]):not([class*="text-xl"]):not([class*="text-2xl"]):not([class*="text-3xl"]):not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]):not([class*="text-[3"]), [class*=" text-amber-"]:not([class*="text-lg"]):not([class*="text-xl"]):not([class*="text-2xl"]):not([class*="text-3xl"]):not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]):not([class*="text-[3"]),
+[class^="text-orange-"]:not([class*="text-lg"]):not([class*="text-xl"]):not([class*="text-2xl"]):not([class*="text-3xl"]):not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]):not([class*="text-[3"]), [class*=" text-orange-"]:not([class*="text-lg"]):not([class*="text-xl"]):not([class*="text-2xl"]):not([class*="text-3xl"]):not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]):not([class*="text-[3"]),
+[class^="text-yellow-"]:not([class*="text-lg"]):not([class*="text-xl"]):not([class*="text-2xl"]):not([class*="text-3xl"]):not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]):not([class*="text-[3"]), [class*=" text-yellow-"]:not([class*="text-lg"]):not([class*="text-xl"]):not([class*="text-2xl"]):not([class*="text-3xl"]):not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]):not([class*="text-[3"]),
+[class^="text-emerald-"]:not([class*="text-lg"]):not([class*="text-xl"]):not([class*="text-2xl"]):not([class*="text-3xl"]):not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]):not([class*="text-[3"]), [class*=" text-emerald-"]:not([class*="text-lg"]):not([class*="text-xl"]):not([class*="text-2xl"]):not([class*="text-3xl"]):not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]):not([class*="text-[3"]),
+[class^="text-green-"]:not([class*="text-lg"]):not([class*="text-xl"]):not([class*="text-2xl"]):not([class*="text-3xl"]):not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]):not([class*="text-[3"]), [class*=" text-green-"]:not([class*="text-lg"]):not([class*="text-xl"]):not([class*="text-2xl"]):not([class*="text-3xl"]):not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]):not([class*="text-[3"]),
+[class^="text-lime-"]:not([class*="text-lg"]):not([class*="text-xl"]):not([class*="text-2xl"]):not([class*="text-3xl"]):not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]):not([class*="text-[3"]), [class*=" text-lime-"]:not([class*="text-lg"]):not([class*="text-xl"]):not([class*="text-2xl"]):not([class*="text-3xl"]):not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]):not([class*="text-[3"]) {
+  color: var(--calm-label) !important;
+}
+
+/* Icons never carry decorative colour (red critical icons are kept) */
+svg[class*="text-amber-"],
+svg[class*="text-orange-"],
+svg[class*="text-yellow-"],
+svg[class*="text-emerald-"],
+svg[class*="text-green-"],
+svg[class*="text-lime-"],
+svg[class*="text-cyan-"],
+svg[class*="text-sky-"],
+svg[class*="text-blue-"],
+svg[class*="text-indigo-"],
+svg[class*="text-violet-"],
+svg[class*="text-purple-"],
+svg[class*="text-fuchsia-"],
+svg[class*="text-pink-"],
+svg[class*="text-teal-"] {
+  color: var(--color-slate-400) !important;
+}
+
+/* 5. Coloured outlines -> neutral hairline */
+[class^="border-amber-"], [class*=" border-amber-"],
+[class^="border-orange-"], [class*=" border-orange-"],
+[class^="border-yellow-"], [class*=" border-yellow-"],
+[class^="border-emerald-"], [class*=" border-emerald-"],
+[class^="border-green-"], [class*=" border-green-"],
+[class^="border-lime-"], [class*=" border-lime-"],
+[class^="border-cyan-"], [class*=" border-cyan-"],
+[class^="border-sky-"], [class*=" border-sky-"],
+[class^="border-blue-"], [class*=" border-blue-"],
+[class^="border-indigo-"], [class*=" border-indigo-"],
+[class^="border-violet-"], [class*=" border-violet-"],
+[class^="border-purple-"], [class*=" border-purple-"],
+[class^="border-fuchsia-"], [class*=" border-fuchsia-"],
+[class^="border-pink-"], [class*=" border-pink-"],
+[class^="border-teal-"], [class*=" border-teal-"],
+[class^="border-rose-"], [class*=" border-rose-"],
+[class^="border-red-"], [class*=" border-red-"] {
+  border-color: var(--calm-hairline) !important;
+}
+
+[class^="ring-amber-"], [class*=" ring-amber-"],
+[class^="ring-orange-"], [class*=" ring-orange-"],
+[class^="ring-yellow-"], [class*=" ring-yellow-"],
+[class^="ring-emerald-"], [class*=" ring-emerald-"],
+[class^="ring-green-"], [class*=" ring-green-"],
+[class^="ring-lime-"], [class*=" ring-lime-"],
+[class^="ring-cyan-"], [class*=" ring-cyan-"],
+[class^="ring-sky-"], [class*=" ring-sky-"],
+[class^="ring-blue-"], [class*=" ring-blue-"],
+[class^="ring-indigo-"], [class*=" ring-indigo-"],
+[class^="ring-violet-"], [class*=" ring-violet-"],
+[class^="ring-purple-"], [class*=" ring-purple-"],
+[class^="ring-fuchsia-"], [class*=" ring-fuchsia-"],
+[class^="ring-pink-"], [class*=" ring-pink-"],
+[class^="ring-teal-"], [class*=" ring-teal-"],
+[class^="ring-rose-"], [class*=" ring-rose-"],
+[class^="ring-red-"], [class*=" ring-red-"] {
+  --tw-ring-color: var(--calm-hairline) !important;
+}
+
+[class^="accent-amber-"], [class*=" accent-amber-"],
+[class^="accent-orange-"], [class*=" accent-orange-"],
+[class^="accent-yellow-"], [class*=" accent-yellow-"],
+[class^="accent-emerald-"], [class*=" accent-emerald-"],
+[class^="accent-green-"], [class*=" accent-green-"],
+[class^="accent-lime-"], [class*=" accent-lime-"],
+[class^="accent-cyan-"], [class*=" accent-cyan-"],
+[class^="accent-sky-"], [class*=" accent-sky-"],
+[class^="accent-blue-"], [class*=" accent-blue-"],
+[class^="accent-indigo-"], [class*=" accent-indigo-"],
+[class^="accent-violet-"], [class*=" accent-violet-"],
+[class^="accent-purple-"], [class*=" accent-purple-"],
+[class^="accent-fuchsia-"], [class*=" accent-fuchsia-"],
+[class^="accent-pink-"], [class*=" accent-pink-"],
+[class^="accent-teal-"], [class*=" accent-teal-"],
+[class^="accent-rose-"], [class*=" accent-rose-"],
+[class^="accent-red-"], [class*=" accent-red-"] {
+  accent-color: var(--color-cyan-500) !important;
+}
+
+/* 7. Shouty uppercase micro-labels: neutral and lighter */
+.uppercase:not([class*="text-rose-"]):not([class*="text-red-"]):not(button):not(h1, h2, h3, h4) {
+  color: var(--color-slate-400) !important;
+  font-weight: 600 !important;
+}
+
+/* ==========================================================================
+   Layout consistency
+   ========================================================================== */
+
+/* Section headings: sentence case, bright, and clearly above the content they introduce */
+h2.uppercase,
+h3.uppercase,
+h4.uppercase {
+  text-transform: none;
+  letter-spacing: -0.012em;
+  font-weight: 600 !important;
+  color: var(--color-slate-100) !important;
+}
+h2.uppercase {
+  font-size: 17px;
+}
+h3.uppercase,
+h4.uppercase {
+  font-size: 15px;
+}
+
+/* One surface for every inset panel inside a card (they mixed black and grey).
+   Progress-bar tracks (rounded-full) and overlays on the map (absolute) keep their own. */
+main .bg-slate-950:not(.rounded-full):not(.absolute),
+main [class*="bg-slate-950/"]:not(.absolute):not(.rounded-full) {
+  background-color: var(--calm-fill);
+}
+
+.calm-tile {
+  background-color: var(--calm-fill);
+  border-color: var(--calm-hairline);
+}
+
+/* Key figures next to the vehicle title */
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.875rem;
+  background-color: var(--calm-fill);
+  text-align: left;
+}
+.hero-stat-label {
+  font-size: 12px;
+  color: var(--color-slate-400);
+}
+.hero-stat-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-slate-100);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+@media (min-width: 1280px) {
+  .hero-stat {
+    min-width: 128px;
+  }
+}
+
+/* ==========================================================================
+   App-like pointer behaviour
+   This is an app, not a document: clicking a label must not drop a text caret in it
+   (browsers do this with caret browsing on, F7) or start a text selection.
+   Text can still be typed and selected in fields, code blocks and .select-text / .select-all.
+   ========================================================================== */
+html {
+  caret-color: transparent;
+}
+body {
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+}
+input,
+textarea,
+[contenteditable="true"] {
+  caret-color: var(--color-cyan-400);
+  cursor: text;
+  -webkit-user-select: text;
+  user-select: text;
+}
+input[type="range"],
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+}
+pre,
+code,
+.select-text {
+  -webkit-user-select: text;
+  user-select: text;
+}
+.select-all {
+  -webkit-user-select: all;
+  user-select: all;
+}
+button:not(:disabled),
+a[href],
+select,
+label[for],
+[role="tab"] {
+  cursor: pointer;
+}
+
+/* Status text and badges stay readable: only small dots and icons may pulse */
+.animate-pulse:not(.rounded-full):not(svg) {
+  animation: none !important;
+}
+
+/* Light appearance: the palest accent shades must stay readable on white */
+html.theme-daytime {
+  --color-rose-50: #b5000f;
+  --color-rose-100: #b5000f;
+  --color-rose-200: #b5000f;
+  --color-red-200: #b5000f;
+  --color-red-300: #b5000f;
+  --color-red-400: #d70015;
+  --color-emerald-100: #1f7a35;
+  --color-emerald-200: #1f7a35;
+  --color-amber-100: #a05a00;
+  --color-cyan-100: #0055b3;
+  --color-sky-200: #0055b3;
+}

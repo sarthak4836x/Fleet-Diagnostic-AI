@@ -1,0 +1,28 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Runtime data (user store with password hashes, backups) - never commit
+/data/
+__pycache__/
+*.pyc
+
+# Vercel build output
+.vercel/
+
+# Playwright output (traces, reports, cached browser state)
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Dependencies are locked with bun.lock (Vercel installs from it); do not commit an npm lockfile too
+package-lock.json
+
+# Output of the graphify code-mapping tool (contains local machine paths)
+graphify-out/
