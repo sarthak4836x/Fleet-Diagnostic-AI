@@ -1,0 +1,39 @@
+{
+  "note": "Standard SAE J1939 public assignments; contains no Cummins proprietary content.",
+  "pgns": [
+    { "pgn": 59904, "acronym": "RQST", "name": "Request", "spns": [] },
+    { "pgn": 60928, "acronym": "AC", "name": "Address Claimed / NAME", "spns": [] },
+    { "pgn": 61444, "acronym": "EEC1", "name": "Electronic Engine Controller 1", "spns": [
+      { "spn": 190, "name": "Engine Speed", "units": "rpm" },
+      { "spn": 513, "name": "Actual Engine - Percent Torque", "units": "%" },
+      { "spn": 512, "name": "Driver's Demand Engine - Percent Torque", "units": "%" }
+    ] },
+    { "pgn": 65262, "acronym": "ET1", "name": "Engine Temperature 1", "spns": [
+      { "spn": 110, "name": "Engine Coolant Temperature", "units": "degC" },
+      { "spn": 174, "name": "Engine Fuel Temperature 1", "units": "degC" },
+      { "spn": 175, "name": "Engine Oil Temperature 1", "units": "degC" }
+    ] },
+    { "pgn": 65263, "acronym": "EFL/P1", "name": "Engine Fluid Level/Pressure 1", "spns": [
+      { "spn": 100, "name": "Engine Oil Pressure", "units": "kPa" },
+      { "spn": 94, "name": "Engine Fuel Delivery Pressure", "units": "kPa" }
+    ] },
+    { "pgn": 65253, "acronym": "HOURS", "name": "Engine Hours, Revolutions", "spns": [
+      { "spn": 247, "name": "Engine Total Hours of Operation", "units": "h" }
+    ] },
+    { "pgn": 65266, "acronym": "LFE", "name": "Fuel Economy (Liquid)", "spns": [
+      { "spn": 183, "name": "Engine Fuel Rate", "units": "L/h" },
+      { "spn": 184, "name": "Engine Instantaneous Fuel Economy", "units": "km/L" }
+    ] },
+    { "pgn": 65276, "acronym": "DD", "name": "Dash Display", "spns": [
+      { "spn": 96, "name": "Fuel Level 1", "units": "%" }
+    ] },
+    { "pgn": 65265, "acronym": "CCVS1", "name": "Cruise Control/Vehicle Speed 1", "spns": [
+      { "spn": 84, "name": "Wheel-Based Vehicle Speed", "units": "km/h" }
+    ] },
+    { "pgn": 65260, "acronym": "VI", "name": "Vehicle Identification", "spns": [
+      { "spn": 237, "name": "Vehicle Identification Number", "units": "ASCII" }
+    ] },
+    { "pgn": 65226, "acronym": "DM1", "name": "Active Diagnostic Trouble Codes", "spns": [] },
+    { "pgn": 65227, "acronym": "DM2", "name": "Previously Active Diagnostic Trouble Codes", "spns": [] }
+  ]
+}

@@ -1,0 +1,28 @@
+# Dependabot opens pull requests to keep dependencies and GitHub Actions up to date.
+# Minor and patch updates are grouped into one weekly pull request per ecosystem to keep the noise down.
+version: 2
+updates:
+  # JavaScript dependencies (locked with bun.lock)
+  - package-ecosystem: "bun"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]
+    # Major versions can break the app in ways CI doesn't catch (UI, AI, runtime), so
+    # Dependabot only proposes minor and patch updates. Security updates still arrive for
+    # every version. Do major upgrades by hand, one at a time, and test the site.
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # Actions used by the workflows in .github/workflows (pinned to commit SHAs)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions:
+        patterns: ["*"]
