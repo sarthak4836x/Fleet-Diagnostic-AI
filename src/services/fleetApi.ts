@@ -101,9 +101,9 @@ export function describeFleetLoadFailure(err: unknown): FleetLoadFailure {
 /** True when data survives a restart. Vercel without Upstash reports "memory". */
 export async function isStoragePersistent(): Promise<boolean> {
   try {
-    const res = await fetch('/api/health');
+    const res = await fetch('/api/storage-status');
     const data = await res.json();
-    return res.ok && data.accountStore !== 'memory';
+    return res.ok && data.persistent === true;
   } catch {
     return false;
   }
