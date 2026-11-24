@@ -2578,13 +2578,15 @@ app.get("/api/tata-dtc-catalog", (_req, res) => {
 });
 
 // Health check
+// Public, so it says nothing about the deployment: platform and storage details help an attacker
+// (a "memory" store means lockouts and rate limits are per instance).
 app.get("/api/health", (_req, res) => {
-  res.json({
-    status: "ok",
-    timestamp: new Date().toISOString(),
-    platform: IS_VERCEL ? "vercel" : "node",
-    accountStore: authStoreKind, // "redis" = persistent, "memory" = resets on cold start
-  });
+  res.json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
+// Signed-in only (behind apiAuthGate): lets the app warn that data resets on a cold start.
+app.get("/api/storage-status", (_req, res) => {
+  res.json({ persistent: authStoreKind !== "memory" });
 });
 
 // Unknown API routes -> JSON 404 (instead of falling through to the SPA HTML)

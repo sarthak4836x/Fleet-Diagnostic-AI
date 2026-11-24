@@ -84,7 +84,7 @@ Copy `.env.example` to `.env`, which git ignores. Never commit real values.
 3. Connect **Upstash for Redis** from the Vercel Marketplace.
 4. Redeploy, because new variables only apply to new deployments.
 
-Visit `/api/health` to confirm. `accountStore` should say `redis`. If it says `memory`, Upstash isn't connected.
+To confirm, sign in and visit `/api/storage-status`: it should say `"persistent": true`. If it says `false`, Upstash isn't connected, and sign-in rate limits and lockouts only count per server instance.
 
 **Locked out of an account?** If a customer's owner is locked out, sign in as a developer, open the fleet button in the header, press Add user on that fleet, and add a replacement with the Fleet Owner role.
 

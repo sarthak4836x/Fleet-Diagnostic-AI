@@ -50,6 +50,19 @@ describe('authentication', () => {
     expect(res.body.status).toBe('ok');
   });
 
+  it('health reveals nothing about the deployment', async () => {
+    const res = await request(app).get('/api/health').set('X-Forwarded-For', nextIp());
+    expect(Object.keys(res.body).sort()).toEqual(['status', 'timestamp']);
+  });
+
+  it('storage status needs a session and reports only whether data persists', async () => {
+    const anon = await request(app).get('/api/storage-status').set('X-Forwarded-For', nextIp());
+    expect(anon.status).toBe(401);
+    const res = await call(tech).get('/api/storage-status');
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ persistent: expect.any(Boolean) });
+  });
+
   it('blocks every other API route without a session', async () => {
     for (const url of ['/api/fleet', '/api/backup/export', '/api/security/audit-log', '/api/dtc-database']) {
       const res = await request(app).get(url).set('X-Forwarded-For', nextIp());
