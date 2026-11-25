@@ -70,6 +70,7 @@ Copy `.env.example` to `.env`, which git ignores. Never commit real values.
 | Variable | Needed | What it does |
 | --- | --- | --- |
 | `FLEETDIAG_PASSWORD_<ROLE>` | On Vercel | Password for each built-in account. A role left empty can't sign in there. |
+| `FLEETDIAG_LOGIN_ALIASES_<ROLE>` | Optional | Extra sign-in names for a built-in account, comma-separated (for example your email and a username). Kept out of the code, and works for existing accounts. |
 | `SESSION_SECRET` | Recommended | Signs session cookies. Use 32 or more random characters. |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | On Vercel | Permanent storage. Without them, data resets whenever the function restarts. |
 | `GEMINI_API_KEY` | Optional | Turns on AI diagnostics. Stays on the server. |
