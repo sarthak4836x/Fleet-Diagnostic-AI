@@ -27,6 +27,8 @@ export default defineConfig({
       FLEETDIAG_PASSWORD_FLEET_MANAGER: 'Test-manager-1',
       FLEETDIAG_PASSWORD_TECHNICIAN: 'Test-technician-1',
       FLEETDIAG_PASSWORD_DISPATCHER: 'Test-dispatcher-1',
+      // Extra sign-in names; 'tech' is already the technician's, so the store's owner must win it
+      FLEETDIAG_LOGIN_ALIASES_DEVELOPER: ' Owner@Example.com , owner-name,tech',
     },
     testTimeout: 30000,
     hookTimeout: 30000,

@@ -426,15 +426,40 @@ async function getUserById(id: string): Promise<StoredUser | null> {
 }
 
 /** Email or alias only. Name and badge number are visible to others, so they never sign anyone in. */
+/**
+ * Extra sign-in names for the built-in accounts, from FLEETDIAG_LOGIN_ALIASES_<ROLE> (comma-separated,
+ * e.g. "me@example.com,myname"). They live in the environment so personal emails never enter the code,
+ * and they are read on every sign-in, so they also work for accounts created before they were set.
+ */
+export function envLoginAliases(env: NodeJS.ProcessEnv = process.env): Map<string, string> {
+  const aliases = new Map<string, string>();
+  for (const cred of Object.values(ROLE_CREDENTIALS)) {
+    const raw = env[`FLEETDIAG_LOGIN_ALIASES_${cred.role.toUpperCase()}`];
+    if (!raw) continue;
+    for (const a of raw.split(",")) {
+      const name = a.trim().toLowerCase();
+      if (name && name.length <= 254 && !aliases.has(name)) aliases.set(name, `usr-${cred.role}-${cred.badgeNumber.toLowerCase()}`);
+    }
+  }
+  return aliases;
+}
+
+const ENV_LOGIN_ALIASES = envLoginAliases();
+
 async function findUserByLogin(identifier: unknown): Promise<StoredUser | null> {
   if (typeof identifier !== "string") return null;
   const id = identifier.trim().toLowerCase();
   if (!id || id.length > 254) return null;
   await ready();
-  const uid = await kv.get<string>(loginKey(id));
+  const stored = await kv.get<string>(loginKey(id));
+  // A name already claimed in the store always wins; an environment alias only fills a free name.
+  const envId = stored ? undefined : ENV_LOGIN_ALIASES.get(id);
+  const uid = stored || envId;
   // Read a record even when there is no match, so an unknown name costs the same store reads as a known one.
   const u = await getUserById(uid || NO_ACCOUNT_ID);
-  if (!uid || !u || !(u.email === id || u.aliases.includes(id))) return null;
+  if (!uid || !u) return null;
+  if (envId) return u;
+  if (!(u.email === id || u.aliases.includes(id))) return null;
   return u;
 }
 
